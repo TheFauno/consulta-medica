@@ -1,0 +1,43 @@
+{% extends "base.html.twig" %} {% set title = 'Inicio - Pacientes' %} {% block navbar %} {{ parent() }} {% endblock navbar
+%} {% block content %}
+<div class="container" style="padding-top:5%">
+    <div class="jumbotron">
+        <button class="btn btn-primary">Registrar paciente</button>
+        <!--DATATABLE PACIENTES-->
+        <hr>
+        <table id="example" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </tfoot>
+    </table>
+
+    </div>
+</div>
+{% endblock content %} {% block js %} {{ parent() }}
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable( {
+        "ajax": '../app/config/arrays.txt'
+    } );
+} );
+</script>
+
+{% endblock js %}

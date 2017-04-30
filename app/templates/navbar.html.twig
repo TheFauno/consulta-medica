@@ -1,0 +1,47 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="nav-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">                
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><!--<img alt="Brand" src="...">-->ConsultaApp</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="nav navbar-nav">
+                {% if module == 'historias'%}
+
+                <li class="active"><a href="{{path_for('inicio-historia')}}">Historias <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Agenda</a></li>
+                <li><a href="{{path_for('inicio-paciente')}}">Pacientes</a></li>
+                <li><a href="#">Reportes</a></li>
+                <li><a href="#">Fármacos</a></li>
+
+                {% elseif module == 'pacientes' %}
+                
+                <li><a href="{{path_for('inicio-historia')}}">Historias</a></li>
+                <li><a href="#">Agenda</a></li>
+                <li class="active"><a href="{{path_for('inicio-paciente')}}">Pacientes <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Reportes</a></li>
+                <li><a href="#">Fármacos</a></li>
+
+               {# {% if module == 'inicio' %}
+
+                {% if module == 'inicio' %}
+
+                {% if module == 'inicio' %}
+
+                {% if module == 'inicio' %}#}
+                    
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><p class="navbar-text"><a href="#" class="navbar-link">Usuario</a></p></li>
+                <li><button class="btn btn-default navbar-btn">cerrar sesión</button></li>                
+            </ul>            
+        </div>
+    </div>
+</nav>
