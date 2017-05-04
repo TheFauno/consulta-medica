@@ -9,6 +9,7 @@ class HomeController{
     }
    
     public function index($request, $response, $args) {
+        $data = $request->getParsedBody();
         return $this->container->view->render($response, 'inicio.html.twig');
     }
 

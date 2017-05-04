@@ -10,7 +10,8 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Edad</th>
-                    <th>Próxima cita</th>
+                    <th>Última atención</th>
+                    <th>Próxima atención</th>
                     <th>Opciones</th>
                 </tr>
             </thead>
@@ -18,7 +19,8 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Edad</th>
-                    <th>Próxima cita</th>
+                    <th>Última atención</th>
+                    <th>Próxima atención</th>
                     <th>Opciones</th>
                 </tr>
             </tfoot>
@@ -26,11 +28,23 @@
                 <tr>
                     <td>Tiger Nixon</td>
                     <td>24</td>
+                    <td>20/06/2017</td>
                     <td>24/06/2017</td>
                     <td>
-                        <button id="editar-18.006.063-4" type="button" class="btn btn-xs btn-primary" data-path="{{path_for('editar-paciente')}}"><span class="glyphicon glyphicon-pencil"></span></button>
-                        <button id="agendar-18.006.063-4" type="button" class="btn btn-xs btn-primary" data-path="{{path_for('agendar-hora-paciente')}}"><span class="glyphicon glyphicon-calendar"></span></button>
-                        <button id="eliminar-18.006.063-4" type="button" class="btn btn-xs btn-primary"  data-path="{{path_for('eliminar-paciente')}}"><span class="glyphicon glyphicon-trash"></span></button>
+                        <button id="18.006.063" type="button" class="btn btn-xs btn-primary editar" data-path="{{path_for('editar-paciente', { 'id': 18.006.063 })}}"><span class="glyphicon glyphicon-pencil"></span></button>
+                        <button id="agendar" rut="18.006.063-4" type="button" class="btn btn-xs btn-primary" data-path="{{path_for('agendar-hora-paciente')}}"><span class="glyphicon glyphicon-calendar"></span></button>
+                        <button id="eliminar" rut="18.006.063-4" type="button" class="btn btn-xs btn-primary"  data-path="{{path_for('eliminar-paciente')}}"><span class="glyphicon glyphicon-trash"></span></button>
+                    </td>
+                </tr>
+                 <tr>
+                    <td>Tiger Nixon</td>
+                    <td>24</td>
+                    <td>22/06/2017</td>
+                    <td>24/06/2017</td>
+                    <td>
+                        <button id="18.006.063-4" type="button" class="btn btn-xs btn-primary editar" data-path="{{path_for('editar-paciente', { 'id': 18.006.063-4 })}}"><span class="glyphicon glyphicon-pencil"></span></button>
+                        <button id="agendar" rut="18.006.063-4" type="button" class="btn btn-xs btn-primary" data-path="{{path_for('agendar-hora-paciente')}}"><span class="glyphicon glyphicon-calendar"></span></button>
+                        <button id="eliminar" rut="18.006.063-4" type="button" class="btn btn-xs btn-primary"  data-path="{{path_for('eliminar-paciente')}}"><span class="glyphicon glyphicon-trash"></span></button>
                     </td>
                 </tr>
                 {% for p in array %}
@@ -39,9 +53,9 @@
                     <td>{{p.edad}}</td>
                     <td>{{p.proxima_cita}}</td>
                     <td>
-                        <button id="editar-{{p.rut}}" type="button" class="btn btn-xs btn-primary" data-path="{{path_for('editar-paciente')}}"><span class="glyphicon glyphicon-pencil"></span></button>
-                        <button id="agendar-{{p.rut}}" type="button" class="btn btn-xs btn-primary" data-path="{{path_for('agendar-hora-paciente')}}"><span class="glyphicon glyphicon-calendar"></span></button>
-                        <button id="eliminar-{{p.rut}}" type="button" class="btn btn-xs btn-primary"  data-path="{{path_for('eliminar-paciente')}}"><span class="glyphicon glyphicon-trash"></span></button>
+                        <button id="editar" rut="{{p.rut}}" type="button" class="btn btn-xs btn-primary" data-path="{{path_for('editar-paciente')}}"><span class="glyphicon glyphicon-pencil"></span></button>
+                        <button id="agendar" rut="{{p.rut}}" type="button" class="btn btn-xs btn-primary" data-path="{{path_for('agendar-hora-paciente')}}"><span class="glyphicon glyphicon-calendar"></span></button>
+                        <button id="eliminar" rut="{{p.rut}}" type="button" class="btn btn-xs btn-primary"  data-path="{{path_for('eliminar-paciente')}}"><span class="glyphicon glyphicon-trash"></span></button>
                     </td>
                 </tr>
                 {% endfor %}
@@ -57,7 +71,7 @@
 
 <script>
     $(document).ready(function () {
-        //lenguaje tabla
+        //config. lenguaje tabla
         $('#example').DataTable({
             language: {
                 processing: "Procesando solicitud...",
@@ -80,13 +94,28 @@
                 }
             }
         });
-        //       
+        //registrar paciente
         $('#btn-reg-paciente').on('click',function(){
             url = $(this).attr('data-path');
-            $.ajax({
-                url: url,
-                type: 'post'
+            $.post({
+                url: url
             }).done(function(data){
+                form = JSON.parse(data);
+                $('#modal').html(form);
+                calcularedad();
+                $('#myModal').modal('show');
+            });
+        });
+        //editar paciente de la tabla
+        $('.editar').on('click', function(){
+            url = $(this).attr('data-path');
+            id = $(this).attr('id');
+            $.post({
+                url: url,
+                data: {
+                    id: id
+                }    
+            }).done( function(data){
                 form = JSON.parse(data);
                 $('#modal').html(form);
                 calcularedad();
@@ -113,7 +142,6 @@ function calcularedad(){
         {
             age--;
         }
-        console.log(age);
         $('#in-edad').val(age);
     });
 }

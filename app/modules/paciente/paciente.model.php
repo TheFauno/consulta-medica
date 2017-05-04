@@ -19,7 +19,7 @@ class Paciente{
 
     public function __construct(){
     }
-/*
+
     public function insert($rut, $nombre, $apaterno, $amaterno, $faci, $edad, $sexo, $afiliacion, $ultimacita, $telefonos, $estadoc){
         
         if($this->exist($rut)){
@@ -50,7 +50,7 @@ class Paciente{
         }catch(PDOException $e){
             $e->getMessage();
         }
-    }*/
+    }
 
     private function setPaciente($rut, $nombre, $apaterno, $amaterno, $faci, $edad, $sexo, $afiliacion, $ultimacita){
 
@@ -87,8 +87,17 @@ class Paciente{
         }
     }
 
-
-
+    public function getPaciente($rut){
+        try{
+            $sql = $this->db->prepare('SELECT * FROM paciente WHERE rut_paciente = :rut');
+            $sql->bindParam(':rut', $rut);
+            $sql->execute();
+            $paciente = $sql->fetch();
+            return $paciente;
+        }catch(PDOException $e){
+            $e->getMessage();
+        }
+    }
 //setter
     public function setPacientes($pacientes){
         $this->pacientes = $pacientes;
