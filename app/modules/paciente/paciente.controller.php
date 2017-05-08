@@ -18,6 +18,15 @@ class PacienteController{
         return $this->container->view->render($response, 'registrar.paciente.html.twig');
     }
 
+    public function delete($request, $response, $args){
+        $data = $request->getParsedBody();
+        $rut = $rut = filter_var($data['rut'], FILTER_SANITIZE_STRING);
+        $paciente = newPaciente();
+        if($paciente->exist($rut)){
+            $paciente->delete($rut);
+        }
+    }
+
     public function getPaciente($request, $repsonse, $args){
         $data = $request->getParsedBody();
         $rut = filter_var($data['rut'], FILTER_SANITIZE_STRING);        

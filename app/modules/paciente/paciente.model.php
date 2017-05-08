@@ -98,6 +98,17 @@ class Paciente{
             $e->getMessage();
         }
     }
+
+    public function delete($rut){
+        try{
+            $sql = $this->db->prepare('DELETE * FROM paciente WHERE rut_paciente = :rut');
+            $sql->bindParam(':rut', $rut);
+            $sql->execute();
+        }catch(PDOException $e){
+            $e->getMessage();
+        }
+
+    }
 //setter
     public function setPacientes($pacientes){
         $this->pacientes = $pacientes;
